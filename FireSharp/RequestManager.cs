@@ -129,7 +129,9 @@ namespace FireSharp
             var queryStr = string.Empty;
             if (queryBuilder != null)
             {
-                queryStr = $"&{queryBuilder.ToQueryString()}";
+                queryStr = string.IsNullOrWhiteSpace(_config.AuthSecret) 
+                    ? $"?{queryBuilder.ToQueryString()}" 
+                    : $"&{queryBuilder.ToQueryString()}";
             }
 
             var url = $"{_config.BasePath}{authToken}{queryStr}";
